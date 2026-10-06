@@ -1,0 +1,18 @@
+control:
+    Package: mini
+    Version: 1.0.0
+    Architecture: all
+    Maintainer: Ashikul Islam <ashikulislam2726@gmail.com>
+    Depends: python
+    Homepage: https://github.com/ashikulislam2726-rgb/Mini
+    Description: |-
+        Mini - a lightweight Termux AI coding assistant
+         Uses OpenRouter with Gemma 4 26B A4B as the primary model.
+         The API key is requested at runtime and is never stored by the package.
+
+installation_prefix: /data/data/com.termux/files/usr
+
+data_files:
+    bin/mini:
+        source: mini.py
+        set_shebang: "#!/data/data/com.termux/files/usr/bin/python3"
