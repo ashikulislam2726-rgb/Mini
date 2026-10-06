@@ -32,7 +32,7 @@ jobs:
       - name: Build Termux deb
         run: |
           rm -rf pkgroot deb
-          mkdir -p pkgroot/DEBIAN
+          mkdir -p deb pkgroot/DEBIAN
           mkdir -p pkgroot/data/data/com.termux/files/usr/bin
           cat > pkgroot/DEBIAN/control <<'EOF'
           Package: mini
