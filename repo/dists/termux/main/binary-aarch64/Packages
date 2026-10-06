@@ -1,0 +1,15 @@
+Package: mini
+Version: 1.0.0
+Architecture: all
+Maintainer: Ashikul Islam <ashikulislam2726@gmail.com>
+Depends: python
+Homepage: https://github.com/ashikulislam2726-rgb/Mini
+Description: Mini - a lightweight Termux AI coding assistant
+ Uses OpenRouter with Gemma 4 26B A4B as the primary model.
+ The API key is requested at runtime and is never stored by the package.
+Filename: dists/termux/main/binary-aarch64/mini_1.0.0_all.deb
+Size: 2168
+MD5Sum: b3ae3fdbe607b0013ab5ba463b19acd9
+SHA1: 8f16180adcff28cef7e3429809241e87a26d7dc7
+SHA256: 47772d13eb9f89eda6f5f194331aa9f0ee01f0ac1d5001486f793a4f2cb9c735
+

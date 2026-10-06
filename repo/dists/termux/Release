@@ -1,0 +1,21 @@
+Codename: termux
+Version: 1
+Architectures: all aarch64
+Description: Mini Termux repository
+Suite: termux
+Components: main
+MD5Sum:
+ 556fec5cdd8061a8acb86e4b9abf94a4 601 main/binary-aarch64/Packages
+ e01e199d12d27a61a5e967fb1906b896 520 main/binary-aarch64/Packages.xz
+ dc35be66d6eb6347aa2b50b9d1898217 597 main/binary-all/Packages
+ a1f7afffae3173644f597eb881f02c6e 520 main/binary-all/Packages.xz
+SHA1:
+ 7d3a57720491e5c201d70041678bb844cb63a514 601 main/binary-aarch64/Packages
+ 560260f2274a156cad80555ca0e4d3ecda186641 520 main/binary-aarch64/Packages.xz
+ 9b4f0d176c93e927e36aed1fe056d2f428867b1d 597 main/binary-all/Packages
+ ea84c34e5fa0f7ac6c3f3cf33b1a758f764c71ec 520 main/binary-all/Packages.xz
+SHA256:
+ 2cfc24501af4ab9b66cd90b34061dac0ff6031a9addc0c78a68b26343881c2a2 601 main/binary-aarch64/Packages
+ 43974647a8565b73ec5af4480d8405b4218c88c4d53f517c5d8c13162271e0a4 520 main/binary-aarch64/Packages.xz
+ 42bf9208d9c414df2aaf939ebfeb5316a18fc2a93c6b5eb6afc650521295c32e 597 main/binary-all/Packages
+ 96f353102009389b60f0fd6485bef851c38e19b221f9f83e591c66dd2d28ec81 520 main/binary-all/Packages.xz
