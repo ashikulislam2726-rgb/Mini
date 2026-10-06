@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -24,7 +24,9 @@ jobs:
       - name: Install packaging tools
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install termux-create-package termux-apt-repo
+          python3 -m pip install ruamel.yaml termux-apt-repo
+          curl -L https://github.com/termux/termux-create-package/releases/download/v0.12.0/termux-create-package -o /usr/local/bin/termux-create-package
+          chmod 755 /usr/local/bin/termux-create-package
 
       - name: Build deb
         run: |
@@ -35,7 +37,7 @@ jobs:
       - name: Build APT repository
         run: |
           rm -rf site
-          termux-apt-repo deb site stable main
+          termux-apt-repo deb site termux main
           touch site/.nojekyll
           echo "Mini Termux APT repository" > site/index.html
 
