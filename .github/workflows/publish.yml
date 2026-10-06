@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   publish:
-    if: !contains(github.event.head_commit.message, '[skip ci]')
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +35,8 @@ jobs:
           install -m 755 mini.py pkgroot/data/data/com.termux/files/usr/bin/mini
           dpkg-deb --build pkgroot deb/mini_1.0.0_all.deb
           mkdir -p generated-repo
-          python3 -m pip install --disable-pip-version-check termux-apt-repo
+          curl -L 'https://raw.githubusercontent.com/termux/termux-apt-repo/master/termux-apt-repo' -o /usr/local/bin/termux-apt-repo
+          chmod 755 /usr/local/bin/termux-apt-repo
           termux-apt-repo deb generated-repo termux main
           rm -rf repo
           cp -a generated-repo/. repo/
