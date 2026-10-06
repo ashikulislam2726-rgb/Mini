@@ -1,0 +1,56 @@
+name: Build Mini Termux package
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install packaging tools
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install termux-create-package termux-apt-repo
+
+      - name: Build deb
+        run: |
+          mkdir -p deb
+          termux-create-package --deb-dir deb manifest.yml
+          ls -lah deb
+
+      - name: Build APT repository
+        run: |
+          rm -rf site
+          termux-apt-repo deb site stable main
+          touch site/.nojekyll
+          echo "Mini Termux APT repository" > site/index.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
