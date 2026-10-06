@@ -1,4 +1,4 @@
-name: Build Mini Termux package
+name: Build Mini Termux APT repository
 
 on:
   push:
@@ -27,6 +27,7 @@ jobs:
           python3 -m pip install ruamel.yaml termux-apt-repo
           curl -L https://github.com/termux/termux-create-package/releases/download/v0.12.0/termux-create-package -o /usr/local/bin/termux-create-package
           chmod 755 /usr/local/bin/termux-create-package
+          sed -i '/^import importlib$/a import importlib.util' /usr/local/bin/termux-create-package
 
       - name: Build deb
         run: |
@@ -39,7 +40,7 @@ jobs:
           rm -rf site
           termux-apt-repo deb site termux main
           touch site/.nojekyll
-          echo "Mini Termux APT repository" > site/index.html
+          printf '%s\n' 'Mini Termux APT repository' > site/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
