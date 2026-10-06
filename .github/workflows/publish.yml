@@ -1,0 +1,50 @@
+name: Build and publish Mini APT repo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: !contains(github.event.head_commit.message, '[skip ci]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build Termux package and APT repo
+        run: |
+          rm -rf pkgroot deb generated-repo
+          mkdir -p deb pkgroot/DEBIAN pkgroot/data/data/com.termux/files/usr/bin
+          cat > pkgroot/DEBIAN/control <<'EOF'
+          Package: mini
+          Version: 1.0.0
+          Architecture: all
+          Maintainer: Ashikul Islam <ashikul.islam@users.noreply.github.com>
+          Depends: python
+          Homepage: https://github.com/ashikulislam2726-rgb/Mini
+          Description: Mini - a lightweight Termux AI coding assistant
+           Uses OpenRouter with Gemma 4 26B A4B as the primary model.
+           The API key is requested at runtime and is never stored by the package.
+          EOF
+          install -m 755 mini.py pkgroot/data/data/com.termux/files/usr/bin/mini
+          dpkg-deb --build pkgroot deb/mini_1.0.0_all.deb
+          mkdir -p generated-repo
+          python3 -m pip install --disable-pip-version-check termux-apt-repo
+          termux-apt-repo deb generated-repo termux main
+          rm -rf repo
+          cp -a generated-repo/. repo/
+
+      - name: Commit generated repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add repo
+          git diff --cached --quiet && exit 0
+          git commit -m "Publish Mini APT repository [skip ci]"
+          git push
